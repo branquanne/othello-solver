@@ -362,7 +362,7 @@ public class OthelloPosition {
         return newPos;
     }
 
-    protected void directionMove(int row, int col, int rowDir, colDir, char color) {
+    protected void directionMove(int row, int col, int rowDir, int colDir, char color) {
         int r = row + rowDir;
         int c = col + colDir;
 
