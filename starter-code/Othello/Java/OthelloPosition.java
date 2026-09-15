@@ -348,15 +348,15 @@ public class OthelloPosition {
 
         newPos.board[row][col] = color;
 
-        if (this.checkNorth(row, col))       newPos.flipDirection(row, col, -1, 0, color);
-        if (this.checkSouth(row, col))       newPos.flipDirection(row, col, 1, 0, color);
-        if (this.checkEast(row, col))        newPos.flipDirection(row, col, 0, 1, color);
-        if (this.checkWest(row, col))        newPos.flipDirection(row, col, 0, -1, color);
-        if (this.checkNorthEast(row, col))   newPos.flipDirection(row, col, -1, 1, color);
-        if (this.checkNorthWest(row, col))   newPos.flipDirection(row, col, -1, -1, color);
-        if (this.checkSouthEast(row, col))   newPos.flipDirection(row, col, 1, 1, color);
-        if (this.checkSouthWest(row, col))   newPos.flipDirection(row, col, 1, -1, color);
-        
+        if (this.checkNorth(row, col))       newPos.directionMove(row, col, -1, 0, color);
+        if (this.checkSouth(row, col))       newPos.directionMove(row, col, 1, 0, color);
+        if (this.checkEast(row, col))        newPos.directionMove(row, col, 0, 1, color);
+        if (this.checkWest(row, col))        newPos.directionMove(row, col, 0, -1, color);
+        if (this.checkNorthEast(row, col))   newPos.directionMove(row, col, -1, 1, color);
+        if (this.checkNorthWest(row, col))   newPos.directionMove(row, col, -1, -1, color);
+        if (this.checkSouthEast(row, col))   newPos.directionMove(row, col, 1, 1, color);
+        if (this.checkSouthWest(row, col))   newPos.directionMove(row, col, 1, -1, color);
+
         newPos.maxPlayer = !this.maxPlayer;
 
         return newPos;
