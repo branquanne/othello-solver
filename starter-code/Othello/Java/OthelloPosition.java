@@ -328,6 +328,49 @@ public class OthelloPosition {
         /*
          * TODO: write the code for this method and whatever helper functions it needs.
          */
+
+        OthelloPosition newPos = this.clone();
+
+        if (action.isPassMove()) {
+            newPos.maxPlayer = !newPos.maxPlayer;
+            return newPos;
+        }
+
+        int row = action.getRow();
+        int col = action.getColumn();
+        
+        char color;
+        if (this.maxPlayer) {
+            color = 'W';
+        } else {
+            color = 'B';
+        }
+
+        newPos.board[row][col] = color;
+
+        if (this.checkNorth(row, col))       newPos.flipDirection(row, col, -1, 0, color);
+        if (this.checkSouth(row, col))       newPos.flipDirection(row, col, 1, 0, color);
+        if (this.checkEast(row, col))        newPos.flipDirection(row, col, 0, 1, color);
+        if (this.checkWest(row, col))        newPos.flipDirection(row, col, 0, -1, color);
+        if (this.checkNorthEast(row, col))   newPos.flipDirection(row, col, -1, 1, color);
+        if (this.checkNorthWest(row, col))   newPos.flipDirection(row, col, -1, -1, color);
+        if (this.checkSouthEast(row, col))   newPos.flipDirection(row, col, 1, 1, color);
+        if (this.checkSouthWest(row, col))   newPos.flipDirection(row, col, 1, -1, color);
+        
+        newPos.maxPlayer = !this.maxPlayer;
+
+        return newPos;
+    }
+
+    protected void directionMove(int row, int col, int rowDir, colDir, char color) {
+        int r = row + rowDir;
+        int c = col + colDir;
+
+        while (board[r][c] != color) {
+            board[r][c] = color;
+            r += rowDir;
+            c += colDir;
+        }
     }
 
     /**
