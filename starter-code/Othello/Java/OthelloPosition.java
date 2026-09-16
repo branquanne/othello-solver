@@ -356,7 +356,7 @@ public class OthelloPosition {
         return newPos;
     }
 
-    protected void flipMarkers(OthelloPosition pos, int row, int col, int rowDir, int colRow, char color) {
+    protected void flipMarkers(OthelloPosition pos, int row, int col, int rowDir, int colDir, char color) {
         int r = row + rowDir;
         int c = col + colDir;
 
