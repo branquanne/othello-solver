@@ -344,14 +344,14 @@ public class OthelloPosition {
         int row = action.getRow();
         int col = action.getColumn();
 
-        if checkNorth(row, col) flipMarkers(newPos, row, col, -1, 0, c);
-        if checkNorthEast(row, col) flipMarkers(newPos, row, col, -1, 1, c);
-        if checkNorthWest(row, col) flipMarkers(newPos, row, col, -1, -1, c);
-        if checkEast(row, col) flipMarkers(newPos, row, col, 1, 0, c);
-        if checkWest(row, col) flipMarkers(newPos, row, col, -1, 0, c);
-        if checkSouth(row, col) flipMarkers(newPos, row, col, 0, 1, c);
-        if checkSouthEast(row, col) flipMarkers(newPos, row, col, 1, 1, c);
-        if checkSouthWest(row, col) flipMarkers(newPos, row, col, -1, 1, c);
+        if (checkNorth(row, col)) flipMarkers(newPos, row, col, -1, 0, c);
+        if (checkNorthEast(row, col)) flipMarkers(newPos, row, col, -1, 1, c);
+        if (checkNorthWest(row, col)) flipMarkers(newPos, row, col, -1, -1, c);
+        if (checkEast(row, col)) flipMarkers(newPos, row, col, 1, 0, c);
+        if (checkWest(row, col)) flipMarkers(newPos, row, col, -1, 0, c);
+        if (checkSouth(row, col)) flipMarkers(newPos, row, col, 0, 1, c);
+        if (checkSouthEast(row, col)) flipMarkers(newPos, row, col, 1, 1, c);
+        if (checkSouthWest(row, col)) flipMarkers(newPos, row, col, -1, 1, c);
 
         return newPos;
     }
