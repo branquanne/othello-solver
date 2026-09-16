@@ -324,10 +324,6 @@ public class OthelloPosition {
      * the current position. Observe that this also changes the player to move next.
      */
     public OthelloPosition makeMove(OthelloAction action) throws IllegalMoveException {
-        /*
-         * TODO: write the code for this method and whatever helper functions it needs.
-         */
-
         OthelloPosition newPos = clone();
         char c;
         if (action.isPassMove()) {
@@ -356,6 +352,9 @@ public class OthelloPosition {
         return newPos;
     }
 
+    /**
+     * Help function
+     */
     protected void flipMarkers(OthelloPosition pos, int row, int col, int rowDir, int colDir, char color) {
         int r = row + rowDir;
         int c = col + colDir;
