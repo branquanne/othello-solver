@@ -35,12 +35,8 @@ public class AlphaBeta implements OthelloAlgorithm {
 	}
 
 	public OthelloAction evaluate(OthelloPosition pos) {
-		LinkedList<OthelloAction> moves = getMoves():
+		LinkedList<OthelloAction> moves = pos.getMoves();
 
-		for (OthelloAction move : moves) {
-			OthelloPosition nextPos = pos.makeMove(move);
-
-			
-		}
+		
 	}
 }

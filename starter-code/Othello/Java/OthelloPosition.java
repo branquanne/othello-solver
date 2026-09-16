@@ -324,50 +324,44 @@ public class OthelloPosition {
      * the current position. Observe that this also changes the player to move next.
      */
     public OthelloPosition makeMove(OthelloAction action) throws IllegalMoveException {
-
         /*
          * TODO: write the code for this method and whatever helper functions it needs.
          */
 
-        OthelloPosition newPos = this.clone();
-
+        OthelloPosition newPos = clone();
+        char c;
         if (action.isPassMove()) {
             newPos.maxPlayer = !newPos.maxPlayer;
             return newPos;
+        } else if (newPos.maxPlayer) {
+            c = 'W';
+            newPos.board[action.getRow()][action.getColumn()] = c;
+        } else {
+            c = 'B';
+            newPos.board[action.getRow()][action.getColumn()] = c;
         }
 
         int row = action.getRow();
         int col = action.getColumn();
-        
-        char color;
-        if (this.maxPlayer) {
-            color = 'W';
-        } else {
-            color = 'B';
-        }
 
-        newPos.board[row][col] = color;
-
-        if (this.checkNorth(row, col))       newPos.directionMove(row, col, -1, 0, color);
-        if (this.checkSouth(row, col))       newPos.directionMove(row, col, 1, 0, color);
-        if (this.checkEast(row, col))        newPos.directionMove(row, col, 0, 1, color);
-        if (this.checkWest(row, col))        newPos.directionMove(row, col, 0, -1, color);
-        if (this.checkNorthEast(row, col))   newPos.directionMove(row, col, -1, 1, color);
-        if (this.checkNorthWest(row, col))   newPos.directionMove(row, col, -1, -1, color);
-        if (this.checkSouthEast(row, col))   newPos.directionMove(row, col, 1, 1, color);
-        if (this.checkSouthWest(row, col))   newPos.directionMove(row, col, 1, -1, color);
-
-        newPos.maxPlayer = !this.maxPlayer;
+        if checkNorth(row, col) flipMarkers(newPos, row, col, -1, 0, c);
+        if checkNorthEast(row, col) flipMarkers(newPos, row, col, -1, 1, c);
+        if checkNorthWest(row, col) flipMarkers(newPos, row, col, -1, -1, c);
+        if checkEast(row, col) flipMarkers(newPos, row, col, 1, 0, c);
+        if checkWest(row, col) flipMarkers(newPos, row, col, -1, 0, c);
+        if checkSouth(row, col) flipMarkers(newPos, row, col, 0, 1, c);
+        if checkSouthEast(row, col) flipMarkers(newPos, row, col, 1, 1, c);
+        if checkSouthWest(row, col) flipMarkers(newPos, row, col, -1, 1, c);
 
         return newPos;
     }
 
-    protected void directionMove(int row, int col, int rowDir, int colDir, char color) {
+    protected void flipMarkers(OthelloPosition pos, int row, int col, int rowDir, int colRow, char color) {
         int r = row + rowDir;
         int c = col + colDir;
 
-        while (board[r][c] != color) {
-            board[r][c] = color;
+        while (pos.board[r][c] != color) {
+            pos.board[r][c] = color;
             r += rowDir;
             c += colDir;
         }

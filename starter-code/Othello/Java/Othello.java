@@ -43,7 +43,7 @@ public class Othello{
     // TODO: replace the fixed-depth implementation with Iterative Deepening Search
     // ---------------------------------------------------------------------
 	// Set the depth that AlbphaBeta will search to.
-	algorithm.setSearchDepth(7);
+	algorithm.setSearchDepth(5);
 	// Evaluate the position
 	move = algorithm.evaluate(pos);
 	// Send the chosen move to stdout (print it)
