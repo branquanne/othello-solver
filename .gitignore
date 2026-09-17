@@ -1,0 +1,45 @@
+# Java build output
+*.class
+out/
+bin/
+build/
+target/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse/JDTLS project metadata
+.classpath
+.project
+.settings/
+.factorypath
+
+# VS Code
+.vscode/
+
+# Neovim/Vim
+*.swp
+*.swo
+*.swn
+*.un~
+.nvim/
+Session.vim
+
+# Java crash logs
+hs_err_pid*
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux/editor temporary files
+*~
