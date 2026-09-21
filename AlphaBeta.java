@@ -72,5 +72,49 @@ public class AlphaBeta implements OthelloAlgorithm {
 		if (depth == 0) {
 			return evaluator.evaluate(pos);
 		}
+
+		LinkedList<OthelloAction> moves = pos.getMoves();
+
+		if (isMaxPlayer) {
+			int max = Integer.MIN_VALUE;
+			for (OthelloAction move : moves) {
+				try {
+					OthelloPosition newPos = pos.makeMove(move);
+
+					int value = alphaBetaSearch(newPos, depth - 1, alpha, beta, false);
+					max = Math.max(max, value);
+
+					if (beta <= alpha) {
+						break;
+					}
+
+					
+				} catch (IllegalMoveException e) {
+					throw new RuntimeException("Illegal move", e);
+				}
+			}
+			return max;
+		} else {
+			int min = Integer.MAX_VALUE;
+
+			for (OthelloAction move : moves) {
+				try {
+					OthelloPosition newPos = pos.makeMove(move);
+					int value = alphaBetaSearch(newPos, depth - 1, alpha, beta, true);
+
+					min = Math.min(min, value);
+					beta = Math.min(beta, value);
+
+					if (beta <= alpha) {
+						break;
+					}
+
+					
+				} catch (IllegalMoveException e) {
+					throw new RuntimeException("Illegal move", e);
+				}
+			}
+			return min;
+		}
 	}
 }
