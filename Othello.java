@@ -26,7 +26,7 @@ public class Othello{
 	String posString;
 	OthelloPosition pos;
 	OthelloAlgorithm algorithm;
-	OthelloAction move;
+	OthelloAction move = null;
 	
 	if(args.length > 0){
 	    posString = args[0];
@@ -38,15 +38,23 @@ public class Othello{
 	//pos.illustrate(); //Only for debugging. The test script has it's own print method
 	
 	// Which evaluator (heuristics) should be used
-	algorithm = new AlphaBeta(new CountingEvaluator());
-	// ---------------------------------------------------------------------
-    // TODO: replace the fixed-depth implementation with Iterative Deepening Search
-    // ---------------------------------------------------------------------
-	// Set the depth that AlbphaBeta will search to.
-	algorithm.setSearchDepth(5);
-	// Evaluate the position
-	move = algorithm.evaluate(pos);
-	// Send the chosen move to stdout (print it)
+	algorithm = new AlphaBeta(new HeuristicEvaluator());
+
+	long startTime = System.currentTimeMillis();
+	int timeLimit = Integer.parseInt(args[1]);
+		if (timeLimit <= 0) {
+			System.out.print("Invalid time limit");
+			
+		}
+	long timeLimitMili = timeLimit * 1000;
+
+	int i = 1;
+	while (System.currentTimeMillis() - startTime < timeLimitMili - 20) {
+		algorithm.setSearchDepth(i);
+		move = algorithm.evaluate(pos, startTime, timeLimitMili);
+		i++;
+	}
+
 	move.print();
     }
 }

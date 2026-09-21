@@ -34,8 +34,8 @@ public class AlphaBeta implements OthelloAlgorithm {
 	public void setSearchDepth(int depth) {
 		searchDepth = depth;
 	}
-
-	public OthelloAction evaluate(OthelloPosition pos) {
+	
+	public OthelloAction evaluate(OthelloPosition pos, long startTime, long timeLimitMili) {
 		LinkedList<OthelloAction> moves = pos.getMoves();
 
 		if (moves.isEmpty()) {
@@ -52,7 +52,7 @@ public class AlphaBeta implements OthelloAlgorithm {
 		for (int i = 0; i < moves.size(); i++) {
 			try {
 				OthelloPosition newPos = pos.makeMove(moves.get(i));
-				moves.get(i).setValue(alphaBetaSearch(newPos, searchDepth - 1, alpha, beta, false));
+				moves.get(i).setValue(alphaBetaSearch(newPos, searchDepth - 1, alpha, beta, false, startTime, timeLimitMili));
 
 				if (moves.get(i).getValue() > max) {
 					max = moves.get(i).getValue();
@@ -68,8 +68,12 @@ public class AlphaBeta implements OthelloAlgorithm {
 		return moves.get(max_index);
 	}
 
-	private int alphaBetaSearch(OthelloPosition pos, int depth, int alpha, int beta, boolean isMaxPlayer) {
+	private int alphaBetaSearch(OthelloPosition pos, int depth, int alpha, int beta, boolean isMaxPlayer, long startTime, long timeLimitMili) {
 		if (depth == 0) {
+			return evaluator.evaluate(pos);
+		}
+
+		if (startTime > timeLimitMili - 20) {
 			return evaluator.evaluate(pos);
 		}
 
@@ -81,7 +85,7 @@ public class AlphaBeta implements OthelloAlgorithm {
 				try {
 					OthelloPosition newPos = pos.makeMove(move);
 
-					int value = alphaBetaSearch(newPos, depth - 1, alpha, beta, false);
+					int value = alphaBetaSearch(newPos, depth - 1, alpha, beta, false, startTime, timeLimitMili);
 					max = Math.max(max, value);
 
 					if (beta <= alpha) {
@@ -100,7 +104,7 @@ public class AlphaBeta implements OthelloAlgorithm {
 			for (OthelloAction move : moves) {
 				try {
 					OthelloPosition newPos = pos.makeMove(move);
-					int value = alphaBetaSearch(newPos, depth - 1, alpha, beta, true);
+					int value = alphaBetaSearch(newPos, depth - 1, alpha, beta, true, startTime, timeLimitMili);
 
 					min = Math.min(min, value);
 					beta = Math.min(beta, value);
