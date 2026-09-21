@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 
 /**
  * This is where you implement the alpha-beta algorithm.
@@ -37,6 +38,39 @@ public class AlphaBeta implements OthelloAlgorithm {
 	public OthelloAction evaluate(OthelloPosition pos) {
 		LinkedList<OthelloAction> moves = pos.getMoves();
 
-		
+		if (moves.isEmpty()) {
+			OthelloAction pass = new OthelloAction(0, 0, true);
+			return pass;
+		}
+
+		int max_index = 0;
+		int max = Integer.MIN_VALUE;
+
+		int alpha = Integer.MIN_VALUE;
+		int beta = Integer.MAX_VALUE;
+
+		for (int i = 0; i < moves.size(); i++) {
+			try {
+				OthelloPosition newPos = pos.makeMove(moves.get(i));
+				moves.get(i).setValue(alphaBetaSearch(newPos, searchDepth - 1, alpha, beta, false));
+
+				if (moves.get(i).getValue() > max) {
+					max = moves.get(i).getValue();
+					max_index = i;
+				}
+
+				alpha = Math.max(alpha, max);
+
+			} catch (IllegalMoveException e) {
+				throw new RuntimeException("Illegal move", e);
+			}
+		}
+		return moves.get(max_index);
+	}
+
+	private int alphaBetaSearch(OthelloPosition pos, int depth, int alpha, int beta, boolean isMaxPlayer) {
+		if (depth == 0) {
+			return evaluator.evaluate(pos);
+		}
 	}
 }
