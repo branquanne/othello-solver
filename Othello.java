@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 
 public class Othello {
 	/**
@@ -38,22 +39,29 @@ public class Othello {
 		// pos.illustrate(); //Only for debugging. The test script has it's own print
 		// method
 
+		long startTime = System.currentTimeMillis();
 		// Which evaluator (heuristics) should be used
 		algorithm = new AlphaBeta(new HeuristicEvaluator());
 
-		final long startTime = System.currentTimeMillis();
-		int timeLimit = Integer.parseInt(args[1]);
-		if (timeLimit <= 0) {
+		Long timeLimitMili = Long.parseLong(args[1]) * 1000L;
+		if (timeLimitMili <= 0) {
 			System.out.print("Invalid time limit");
-
+			return;
 		}
-		long timeLimitMili = timeLimit * 1000;
 
-		int i = 1;
-		while (System.currentTimeMillis() - startTime < timeLimitMili - 20) {
-			algorithm.setSearchDepth(i);
-			move = algorithm.evaluate(pos, startTime, timeLimitMili);
-			i++;
+		LinkedList<OthelloAction> legalMoves = pos.getMoves();
+		if (legalMoves.isEmpty()) {
+			new OthelloAction(0, 0, true).print();
+			return;
+		}
+
+		for (int depth = 1; System.currentTimeMillis() - startTime < timeLimitMili - 10; depth++) {
+			algorithm.setSearchDepth(depth);
+			OthelloAction candidate = algorithm.evaluate(pos, startTime, timeLimitMili);
+
+			if (candidate != null) {
+				move = candidate;
+			}
 		}
 
 		move.print();

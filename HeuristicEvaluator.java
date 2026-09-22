@@ -97,7 +97,7 @@ public class HeuristicEvaluator implements OthelloEvaluator {
   }
 
   private int scoreValue(int whiteScore, int blackScore) {
-    int total = whiteScore + blackScore;
+    int total = Math.abs(whiteScore) + Math.abs(blackScore);
 
     if (total == 0) {
       return 0;

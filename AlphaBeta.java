@@ -54,7 +54,7 @@ public class AlphaBeta implements OthelloAlgorithm {
 			try {
 				OthelloPosition newPos = pos.makeMove(moves.get(i));
 				moves.get(i).setValue(
-						alphaBetaSearch(newPos, searchDepth - 1, alpha, beta, maximizing, startTime, timeLimitMili));
+						alphaBetaSearch(newPos, searchDepth - 1, alpha, beta, !maximizing, startTime, timeLimitMili));
 
 				if ((moves.get(i).getValue() > bestValue && maximizing)
 						|| (!maximizing && moves.get(i).getValue() < bestValue)) {
@@ -81,7 +81,7 @@ public class AlphaBeta implements OthelloAlgorithm {
 			return evaluator.evaluate(pos);
 		}
 
-		if (System.currentTimeMillis() - startTime > timeLimitMili - 1000) {
+		if (System.currentTimeMillis() - startTime > timeLimitMili - 100) {
 			return evaluator.evaluate(pos);
 		}
 
@@ -95,6 +95,7 @@ public class AlphaBeta implements OthelloAlgorithm {
 
 					int value = alphaBetaSearch(newPos, depth - 1, alpha, beta, false, startTime, timeLimitMili);
 					max = Math.max(max, value);
+					alpha = Math.max(alpha, max);
 
 					if (beta <= alpha) {
 						break;
@@ -114,7 +115,7 @@ public class AlphaBeta implements OthelloAlgorithm {
 					int value = alphaBetaSearch(newPos, depth - 1, alpha, beta, true, startTime, timeLimitMili);
 
 					min = Math.min(min, value);
-					beta = Math.min(beta, value);
+					beta = Math.min(beta, min);
 
 					if (beta <= alpha) {
 						break;
