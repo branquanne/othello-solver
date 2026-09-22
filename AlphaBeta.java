@@ -34,7 +34,7 @@ public class AlphaBeta implements OthelloAlgorithm {
 	public void setSearchDepth(int depth) {
 		searchDepth = depth;
 	}
-	
+
 	public OthelloAction evaluate(OthelloPosition pos, long startTime, long timeLimitMili) {
 		LinkedList<OthelloAction> moves = pos.getMoves();
 
@@ -52,7 +52,8 @@ public class AlphaBeta implements OthelloAlgorithm {
 		for (int i = 0; i < moves.size(); i++) {
 			try {
 				OthelloPosition newPos = pos.makeMove(moves.get(i));
-				moves.get(i).setValue(alphaBetaSearch(newPos, searchDepth - 1, alpha, beta, false, startTime, timeLimitMili));
+				moves.get(i).setValue(
+						alphaBetaSearch(newPos, searchDepth - 1, alpha, beta, false, startTime, timeLimitMili));
 
 				if (moves.get(i).getValue() > max) {
 					max = moves.get(i).getValue();
@@ -68,7 +69,8 @@ public class AlphaBeta implements OthelloAlgorithm {
 		return moves.get(max_index);
 	}
 
-	private int alphaBetaSearch(OthelloPosition pos, int depth, int alpha, int beta, boolean isMaxPlayer, long startTime, long timeLimitMili) {
+	private int alphaBetaSearch(OthelloPosition pos, int depth, int alpha, int beta, boolean isMaxPlayer,
+			long startTime, long timeLimitMili) {
 		if (depth == 0) {
 			return evaluator.evaluate(pos);
 		}
@@ -92,7 +94,6 @@ public class AlphaBeta implements OthelloAlgorithm {
 						break;
 					}
 
-					
 				} catch (IllegalMoveException e) {
 					throw new RuntimeException("Illegal move", e);
 				}
@@ -113,7 +114,6 @@ public class AlphaBeta implements OthelloAlgorithm {
 						break;
 					}
 
-					
 				} catch (IllegalMoveException e) {
 					throw new RuntimeException("Illegal move", e);
 				}
