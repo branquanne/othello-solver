@@ -12,7 +12,7 @@ if [ $# -lt 3 ]; then
 fi
 
 pos="WEEEEEEEEEEEEEEEEEEEEEEEEEEEOXEEEEEEXOEEEEEEEEEEEEEEEEEEEEEEEEEEE"
-java Printer $pos
+java -cp ".:test_code" Printer "$pos"
 
 white="$1" # the program playing white
 black="$2" # the program playing black
@@ -42,7 +42,7 @@ do
     move=`$white $pos $time 0`
     ENDTIME=$(date +%s)
     echo $move    
-    pos=`java Mover "$pos" "$move"`
+    pos=$(java -cp ".:test_code" Mover "$pos" "$move")
     if [ "$move" == "pass" ]
     then
         whitepass="yes"
@@ -53,7 +53,7 @@ do
     else
         whitepass="no"
     fi
-    java Printer $pos
+    java -cp ".:test_code" Printer "$pos"
     whiteT=$(($ENDTIME - $STARTTIME))
     echo "It took $whiteT seconds to make this move..."
     whiteTtot=$(($whiteTtot + $whiteT))
@@ -72,7 +72,7 @@ do
         move=`$black $pos $time 0`
         ENDTIME=$(date +%s)
         echo $move
-        pos=`java Mover "$pos" "$move"`
+        pos=$(java -cp ".:test_code" Mover "$pos" "$move")
         if [ "$move" == "pass" ]
         then
             blackpass="yes"
@@ -83,7 +83,7 @@ do
         else
             blackpass="no"
         fi
-        java Printer $pos
+        java -cp ".:test_code" Printer "$pos"
         blackT=$(($ENDTIME - $STARTTIME))
         echo "It took $blackT seconds to make this move..."
         blackTtot=$(($blackTtot + $blackT))
@@ -96,7 +96,7 @@ do
     nMoves=$(($nMoves+1))
 done
 
-whitecount=`java Counter "$pos"`
+whitecount=$(java -cp ".:test_code" Counter "$pos")
 if [ $whitecount -gt 0 ] 
 then
   winner="White"  
