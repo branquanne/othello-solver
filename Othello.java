@@ -59,8 +59,10 @@ public class Othello {
 			algorithm.setSearchDepth(depth);
 			OthelloAction candidate = algorithm.evaluate(pos, startTime, timeLimitMili);
 
-			if (candidate != null) {
+			if (System.currentTimeMillis() - startTime < timeLimitMili - 100 && candidate != null) {
 				move = candidate;
+			} else {
+				break;
 			}
 		}
 
