@@ -43,8 +43,9 @@ public class AlphaBeta implements OthelloAlgorithm {
 			return pass;
 		}
 
-		int max_index = 0;
-		int max = Integer.MIN_VALUE;
+		boolean maximizing = pos.toMove();
+		int bestIndex = 0;
+		int bestValue = maximizing ? Integer.MIN_VALUE : Integer.MAX_VALUE;
 
 		int alpha = Integer.MIN_VALUE;
 		int beta = Integer.MAX_VALUE;
@@ -53,20 +54,25 @@ public class AlphaBeta implements OthelloAlgorithm {
 			try {
 				OthelloPosition newPos = pos.makeMove(moves.get(i));
 				moves.get(i).setValue(
-						alphaBetaSearch(newPos, searchDepth - 1, alpha, beta, false, startTime, timeLimitMili));
+						alphaBetaSearch(newPos, searchDepth - 1, alpha, beta, maximizing, startTime, timeLimitMili));
 
-				if (moves.get(i).getValue() > max) {
-					max = moves.get(i).getValue();
-					max_index = i;
+				if ((moves.get(i).getValue() > bestValue && maximizing)
+						|| (!maximizing && moves.get(i).getValue() < bestValue)) {
+					bestValue = moves.get(i).getValue();
+					bestIndex = i;
 				}
 
-				alpha = Math.max(alpha, max);
+				if (maximizing) {
+					alpha = Math.max(alpha, bestValue);
+				} else {
+					beta = Math.min(beta, bestValue);
+				}
 
 			} catch (IllegalMoveException e) {
 				throw new RuntimeException("Illegal move", e);
 			}
 		}
-		return moves.get(max_index);
+		return moves.get(bestIndex);
 	}
 
 	private int alphaBetaSearch(OthelloPosition pos, int depth, int alpha, int beta, boolean isMaxPlayer,
@@ -75,7 +81,7 @@ public class AlphaBeta implements OthelloAlgorithm {
 			return evaluator.evaluate(pos);
 		}
 
-		if (System.currentTimeMillis() - startTime > timeLimitMili - 20) {
+		if (System.currentTimeMillis() - startTime > timeLimitMili - 1000) {
 			return evaluator.evaluate(pos);
 		}
 
