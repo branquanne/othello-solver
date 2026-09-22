@@ -390,6 +390,25 @@ public class OthelloPosition {
 
     /* illustrate and other output functions */
 
+    public int evaluate() {
+      int var1 = 0;
+      int var2 = 0;
+
+      for(int var3 = 1; var3 <= 8; ++var3) {
+         for(int var4 = 1; var4 <= 8; ++var4) {
+            if (this.board[var3][var4] == 'W') {
+               ++var2;
+            }
+
+            if (this.board[var3][var4] == 'B') {
+               ++var1;
+            }
+         }
+      }
+
+      return var2 - var1;
+   }
+
     /**
      * Draws an ASCII representation of the position. White squares are marked by
      * '0' while black squares are marked by 'X'.
