@@ -75,9 +75,9 @@ public class AlphaBeta implements OthelloAlgorithm {
 			return evaluator.evaluate(pos);
 		}
 
-		// if (System.currentTimeMillis() - startTime > timeLimitMili - 20) {
-		// return evaluator.evaluate(pos);
-		// }
+		if (System.currentTimeMillis() - startTime > timeLimitMili - 20) {
+			return evaluator.evaluate(pos);
+		}
 
 		LinkedList<OthelloAction> moves = pos.getMoves();
 
