@@ -39,8 +39,7 @@ public class AlphaBeta implements OthelloAlgorithm {
 		LinkedList<OthelloAction> moves = pos.getMoves();
 
 		if (moves.isEmpty()) {
-			OthelloAction pass = new OthelloAction(0, 0, true);
-			return pass;
+			moves.add(new OthelloAction(0, 0, true));
 		}
 
 		boolean maximizing = pos.toMove();
