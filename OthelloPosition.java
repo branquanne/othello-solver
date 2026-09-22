@@ -335,6 +335,10 @@ public class OthelloPosition {
         int col = action.getColumn();
         char c = maxPlayer ? 'W' : 'B';
 
+        if (!isMove(row, col)) {
+            throw new IllegalMoveException(action);
+        }
+
         newPos.board[row][col] = c;
 
         if (checkNorth(row, col))
