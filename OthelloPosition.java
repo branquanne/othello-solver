@@ -325,20 +325,17 @@ public class OthelloPosition {
      */
     public OthelloPosition makeMove(OthelloAction action) throws IllegalMoveException {
         OthelloPosition newPos = clone();
-        char c;
+
         if (action.isPassMove()) {
             newPos.maxPlayer = !newPos.maxPlayer;
             return newPos;
-        } else if (newPos.maxPlayer) {
-            c = 'W';
-            newPos.board[action.getRow()][action.getColumn()] = c;
-        } else {
-            c = 'B';
-            newPos.board[action.getRow()][action.getColumn()] = c;
         }
 
         int row = action.getRow();
         int col = action.getColumn();
+        char c = maxPlayer ? 'W' : 'B';
+
+        newPos.board[row][col] = c;
 
         if (checkNorth(row, col))
             flipMarkers(newPos, row, col, -1, 0, c);
@@ -347,16 +344,17 @@ public class OthelloPosition {
         if (checkNorthWest(row, col))
             flipMarkers(newPos, row, col, -1, -1, c);
         if (checkEast(row, col))
-            flipMarkers(newPos, row, col, 1, 0, c);
-        if (checkWest(row, col))
-            flipMarkers(newPos, row, col, -1, 0, c);
-        if (checkSouth(row, col))
             flipMarkers(newPos, row, col, 0, 1, c);
+        if (checkWest(row, col))
+            flipMarkers(newPos, row, col, 0, -1, c);
+        if (checkSouth(row, col))
+            flipMarkers(newPos, row, col, 1, 0, c);
         if (checkSouthEast(row, col))
             flipMarkers(newPos, row, col, 1, 1, c);
         if (checkSouthWest(row, col))
-            flipMarkers(newPos, row, col, -1, 1, c);
+            flipMarkers(newPos, row, col, 1, -1, c);
 
+        newPos.maxPlayer = !maxPlayer;
         return newPos;
     }
 
