@@ -15,7 +15,7 @@ public class HeuristicEvaluator implements OthelloEvaluator {
       { 100, -20, 10, 5, 5, 10, -20, 100 } };
 
   public int evaluate(OthelloPosition pos) {
-    return evaluateDiscParity(pos) + evaluateMobility(pos) + evaluateCorners(pos) + evaluateStability(pos);
+    return evaluateDiscParity(pos) + evaluateMobility(pos) + evaluateCorners(pos) + 10 * evaluateStability(pos);
   }
 
   private int evaluateDiscParity(OthelloPosition pos) {
