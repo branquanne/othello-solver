@@ -74,6 +74,12 @@ public class AlphaBeta implements OthelloAlgorithm {
 		return moves.get(bestIndex);
 	}
 
+/**
+ * Private function implementing alpha-beta search to a fixed depth.
+ * 
+ * @return An integer representing the highest value move found. 
+ * 
+ */
 	private int alphaBetaSearch(OthelloPosition pos, int depth, int alpha, int beta, boolean isMaxPlayer,
 			long startTime, long timeLimitMili) {
 		if (depth == 0) {
