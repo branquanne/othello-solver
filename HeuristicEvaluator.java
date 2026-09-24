@@ -9,6 +9,9 @@
  */
 public class HeuristicEvaluator implements OthelloEvaluator {
 
+  /*
+   * Represent positional weights for each of the board squares
+   */
   private static final int[][] POSITION_WEIGHTS = { { 100, -20, 10, 5, 5, 10, -20, 100 },
       { -20, -50, -2, -2, -2, -2, -50, -20 },
       { 10, -2, 5, 1, 1, 5, -2, 10 },
@@ -18,10 +21,18 @@ public class HeuristicEvaluator implements OthelloEvaluator {
       { -20, -50, -2, -2, -2, -2, -50, -20 },
       { 100, -20, 10, 5, 5, 10, -20, 100 } };
 
+  /*
+   * Returns the score value for a move, stablity is 10 times more worth than the
+   * others
+   */
   public int evaluate(OthelloPosition pos) {
     return evaluateDiscParity(pos) + evaluateMobility(pos) + evaluateCorners(pos) + 10 * evaluateStability(pos);
   }
 
+  /*
+   * Returns a score between -100 and 100 depending on the difference in markers
+   * on the board
+   */
   private int evaluateDiscParity(OthelloPosition pos) {
     OthelloPosition position = (OthelloPosition) pos;
     int blackSquares = 0;
@@ -37,6 +48,9 @@ public class HeuristicEvaluator implements OthelloEvaluator {
     return scoreValue(whiteSquares, blackSquares);
   }
 
+  /*
+   * Return a score between -100 and 100 depending on how many moves we can make
+   */
   private int evaluateMobility(OthelloPosition pos) {
     try {
       int currentMoves = pos.getMoves().size();
@@ -61,6 +75,10 @@ public class HeuristicEvaluator implements OthelloEvaluator {
 
   }
 
+  /*
+   * Returns a score between -100 and 100 depending on how many corners are
+   * captured
+   */
   private int evaluateCorners(OthelloPosition pos) {
     int whiteCorners = 0;
     int blackCorners = 0;
@@ -80,6 +98,9 @@ public class HeuristicEvaluator implements OthelloEvaluator {
     return scoreValue(whiteCorners, blackCorners);
   }
 
+  /*
+   * Returns a score between -100 and 100 depending on how stable the position is
+   */
   private int evaluateStability(OthelloPosition pos) {
 
     int whiteScore = 0;
@@ -100,6 +121,9 @@ public class HeuristicEvaluator implements OthelloEvaluator {
     return scoreValue(whiteScore, blackScore);
   }
 
+  /*
+   * Helper method for homologating the score to a range between -100 and 100
+   */
   private int scoreValue(int whiteScore, int blackScore) {
     int total = Math.abs(whiteScore) + Math.abs(blackScore);
 
