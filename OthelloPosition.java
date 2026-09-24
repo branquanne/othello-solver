@@ -363,7 +363,7 @@ public class OthelloPosition {
     }
 
     /**
-     * Help function
+     * Helper function that flips markers in the provided direction. 
      */
     protected void flipMarkers(OthelloPosition pos, int row, int col, int rowDir, int colDir, char color) {
         int r = row + rowDir;
