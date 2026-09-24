@@ -1,7 +1,11 @@
 /**
- * A simple evaluator that just counts the number of black and white squares
+ * Heuristic Evaluator that takes 4 different heuristics in to consideration and
+ * returns a score value for the move to be made.
+ *
+ * The score in each method returns a value between -100 and 100 and finally
+ * they are summed with multiplying constants to favour certain heuristics.
  * 
- * @author Henrik Bj&ouml;rklund
+ * @author Bran Quanne & Henrik Röjvall
  */
 public class HeuristicEvaluator implements OthelloEvaluator {
 
