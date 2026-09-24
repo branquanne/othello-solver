@@ -1,12 +1,5 @@
 import java.util.LinkedList;
 
-/**
- * This is where you implement the alpha-beta algorithm.
- * See <code>OthelloAlgorithm</code> for details
- * 
- * @author Henrik Bj&ouml;rklund
- *
- */
 public class AlphaBeta implements OthelloAlgorithm {
 	protected int searchDepth;
 	protected static final int DefaultDepth = 7;
@@ -35,6 +28,10 @@ public class AlphaBeta implements OthelloAlgorithm {
 		searchDepth = depth;
 	}
 
+/**
+ * Evaluates the current position to find the best next move. Acts as the root to the alpha-beta search
+ * and iterates through all valid moves and returns the best minmax value for the current player within the time limit.
+ */
 	public OthelloAction evaluate(OthelloPosition pos, long startTime, long timeLimitMili) {
 		LinkedList<OthelloAction> moves = pos.getMoves();
 
@@ -75,7 +72,7 @@ public class AlphaBeta implements OthelloAlgorithm {
 	}
 
 /**
- * Private function implementing alpha-beta search to a fixed depth.
+ * Private method implementing alpha-beta search to a fixed depth.
  * 
  * @return An integer representing the highest value move found. 
  * 
